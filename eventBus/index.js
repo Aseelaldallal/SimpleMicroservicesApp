@@ -11,10 +11,15 @@ app.post("/events", (req, res) => {
   const event = req.body;
   console.log("EVENT RECIEVED: ", event);
   events.push(event);
-  axios.post("http://localhost:4000/events", event);
-  axios.post("http://localhost:4001/events", event);
-  axios.post("http://localhost:4002/events", event);
-  axios.post("http://localhost:4003/events", event);
+  try {
+    axios.post("http://posts:4000/events", event);
+    axios.post("http://comments:4001/events", event);
+    axios.post("http://moderation:4003/events", event);
+    axios.post("http://query:4004/events", event);
+  } catch (e) {
+    console.log("Error: ", e);
+  }
+
   res.send({ status: "OK" });
 });
 

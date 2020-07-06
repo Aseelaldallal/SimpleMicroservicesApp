@@ -1,0 +1,29 @@
+version: "3"
+services:
+    client:
+        build: ./client
+        ports:
+            - "3000:3000"
+        stdin_open: true
+    posts:
+        build: ./posts
+        ports:
+            - "4000:4000"
+    comments:
+        build: ./comments
+        ports:
+            - "4001:4001"
+    moderation:
+        build: ./moderation
+        ports:
+            - "4003:4003"
+    query:
+        build: ./query
+        ports:
+            - "4004:4004"
+        depends_on:
+            - eventbus
+    eventbus:
+        build: ./eventBus
+        ports:
+            - "4005:4005"
