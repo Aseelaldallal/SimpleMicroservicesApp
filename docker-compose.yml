@@ -1,29 +1,59 @@
 version: "3"
 services:
-    client:
-        build: ./client
-        ports:
-            - "3000:3000"
-        stdin_open: true
-    posts:
-        build: ./posts
-        ports:
-            - "4000:4000"
-    comments:
-        build: ./comments
-        ports:
-            - "4001:4001"
-    moderation:
-        build: ./moderation
-        ports:
-            - "4003:4003"
-    query:
-        build: ./query
-        ports:
-            - "4004:4004"
-        depends_on:
-            - eventbus
-    eventbus:
-        build: ./eventBus
-        ports:
-            - "4005:4005"
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+  posts:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./posts
+    ports:
+      - "4000:4000"
+    volumes:
+      - /app/node_modules
+      - ./posts:/app
+  comments:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./comments
+    ports:
+      - "4001:4001"
+    volumes:
+      - /app/node_modules
+      - ./comments:/app
+  moderation:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./moderation
+    ports:
+      - "4003:4003"
+    volumes:
+      - /app/node_modules
+      - ./moderation:/app
+  query:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./query
+    ports:
+      - "4004:4004"
+    depends_on:
+      - eventbus
+    volumes:
+      - /app/node_modules
+      - ./query:/app
+  eventbus:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./eventbus
+    ports:
+      - "4005:4005"
+    volumes:
+      - /app/node_modules
+      - ./eventBus:/app
